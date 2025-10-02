@@ -7,6 +7,7 @@ import (
 
 	"fiberent/ent"
 	"fiberent/pkg/config"
+
 	_ "github.com/lib/pq"
 )
 

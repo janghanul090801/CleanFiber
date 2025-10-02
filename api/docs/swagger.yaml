@@ -1,0 +1,9 @@
+basePath: /
+host: localhost:3030
+info:
+  contact: {}
+  description: This is swagger for Fiber
+  title: Fiber API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

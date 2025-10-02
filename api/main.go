@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	_ "fiberent/api/docs"
 	"fmt"
 	"log"
+
+	"github.com/gofiber/swagger"
 
 	"fiberent/api/handler"
 	"fiberent/ent"
@@ -12,6 +15,7 @@ import (
 	"fiberent/pkg/config"
 	"fiberent/usecase/pet"
 	"fiberent/usecase/user"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -24,6 +28,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// @title			Fiber API
+// @version		1.0
+// @description	This is swagger for Fiber
+// @host			localhost:3030
+// @BasePath		/
 func main() {
 
 	config.LoadEnvironmentFile(".env")
@@ -53,6 +62,8 @@ func main() {
 	app.Use(logger.New())
 	app.Use(recover.New())
 	app.Use(requestid.New())
+
+	app.Get("/docs/*", swagger.HandlerDefault)
 
 	// Create repositories.
 	userRepository := repository.NewUserRepoEnt(client)
