@@ -5,8 +5,8 @@ import (
 
 	"entgo.io/ent/dialect"
 
-	"github.com/chkilel/fiberent/ent"
-	"github.com/chkilel/fiberent/pkg/config"
+	"fiberent/ent"
+	"fiberent/pkg/config"
 	_ "github.com/lib/pq"
 )
 

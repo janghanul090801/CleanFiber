@@ -3,7 +3,7 @@ package pet
 import (
 	"context"
 
-	"github.com/chkilel/fiberent/entity"
+	"fiberent/entity"
 )
 
 type Service struct {

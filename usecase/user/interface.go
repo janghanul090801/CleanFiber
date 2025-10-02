@@ -3,10 +3,10 @@ package user
 import (
 	"context"
 
-	"github.com/chkilel/fiberent/entity"
+	"fiberent/entity"
 )
 
-//Reader interface
+// Reader interface
 type Reader interface {
 	Get(ctx context.Context, id *entity.ID) (*entity.User, error)
 	GetByEmail(ctx context.Context, email string) (*entity.User, error)
@@ -14,7 +14,7 @@ type Reader interface {
 	List(ctx context.Context) ([]*entity.User, error)
 }
 
-//Writer user writer
+// Writer user writer
 type Writer interface {
 	Create(ctx context.Context, e *entity.User) (*entity.User, error)
 	Update(ctx context.Context, e *entity.User) (*entity.User, error)
@@ -22,13 +22,13 @@ type Writer interface {
 	AddPets(ctx context.Context, userID *entity.ID, petIDs []*entity.ID) error
 }
 
-//Repository interface
+// Repository interface
 type Repository interface {
 	Reader
 	Writer
 }
 
-//UseCase interface
+// UseCase interface
 type UseCase interface {
 	GetUser(ctx context.Context, id *entity.ID) (*entity.User, error)
 	SearchUsers(ctx context.Context, query string) ([]*entity.User, error)

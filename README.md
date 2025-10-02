@@ -12,54 +12,51 @@ Simple, yet powerful ORM for modeling and querying data.
 
 <br/>
 
-## Start development
-> Docker must be installed.
+## 개발 시작하기
+> Docker 필요
 
-Start docker container
+Docker 컨테이너 실행
 ```bash
   make docker-dev # or docker-compose up
 ```
-then migrate database
-
+데이터베이스 마이그레이션 실행
 ```bash
   make migrate
 ```
 <br />
 
-# Steps to create a new entity
+# 새 엔티티 생성법
 
 Install **Ent** entity framework, check out [https://entgo.io/docs/getting-started#installation](https://entgo.io/docs/getting-started#installation) for more information.
 
-> **In the following example, we will create a new entity called `User`.**
-
-1. Create an entity schema
+1. 엔티티 스키마 생성
 
    ```bash
    go run entgo.io/ent/cmd/ent init User # User is the name of the entity
    ```
 
-2. Open up `<project>/ent/schema/user.go`
+2. `<project>/ent/schema/user.go` 수정
 
-   - add your fields to the User schema, check **[Ent Field creation](https://entgo.io/docs/schema-fields)** for more information.
-   - add your edges to the User schema, check **[Ent Edges creation](https://entgo.io/docs/schema-edges)** for more information.
+   - 필드 정의(**[Ent 필드 가이드](https://entgo.io/docs/schema-fields)**)
+   - 관계(Edges) 정의(**[Ent Edges 가이드](https://entgo.io/docs/schema-edges)**)
 
-3. Run go generate from the the project root directory.
+3. 프로젝트 루트에서 코드 생성.
 
      ```bash
      go generate ./ent
      ```
 
-4. Create `user entity` file `<project>/entity/user.go`.
+4. `<project>/entity/user.go` 파일 생성 (엔티티 정의)
 
-5. Define the `user` repository (Reader and Writer) Interface and the usecase (service) Interface in the `<project>/usecase/user` folder
+5. `<project>/usecase/user` 폴더에서 **Repository 인터페이스**와 **Usecase(Service) 인터페이스** 정의
 
-6. Create the User **service** Implementation of the `Usecase` interface in the `<project>/usecase/user/service.go`.
+6. `<project>/usecase/user/service.go` -> Usecase 인터페이스 구현
 
-7. Create the User **repository** implementation of the `Repository` interface in the `<project>/infrastructure/ent/repository/user_ent.go`.
+7. `<project>/infrastructure/ent/repository/user_ent.go` -> Repository 인터페이스 구현.
 
-8. Add the handler `<project>/api/handler/user.go` and the presenter `<project>/api/presenter/user.go` files.
+8. `<project>/api/handler/user.go` 및 `<project>/api/presenter/user.go` 추가 (헨들러 / DTO)
 
-9. Update `<project>/api/main.go` file with the new endpoint.
+9. `<project>/api/main.go` 파일에 새로운 엔드포인트 등록
 
 ## API requests
 

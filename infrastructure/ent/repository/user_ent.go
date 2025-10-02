@@ -4,26 +4,26 @@ import (
 	"context"
 	"strings"
 
-	"github.com/chkilel/fiberent/ent"
-	"github.com/chkilel/fiberent/ent/user"
-	"github.com/chkilel/fiberent/entity"
-	usecase "github.com/chkilel/fiberent/usecase/user"
+	"fiberent/ent"
+	"fiberent/ent/user"
+	"fiberent/entity"
+	usecase "fiberent/usecase/user"
 	"github.com/google/uuid"
 )
 
-//userRepoEnt Ent repo
+// userRepoEnt Ent repo
 type userRepoEnt struct {
 	client *ent.Client
 }
 
-// NewUserRepoEnt is specific implementation of the interface
+// NewUserRepoEnt is a specific implementation of the interface
 func NewUserRepoEnt(client *ent.Client) usecase.Repository {
 	return &userRepoEnt{
 		client: client,
 	}
 }
 
-//Create a user
+// Create a user
 func (r *userRepoEnt) Create(ctx context.Context, e *entity.User) (*entity.User, error) {
 	u, err := r.client.User.Create().
 		SetFirstName(e.FirstName).
@@ -41,7 +41,7 @@ func (r *userRepoEnt) Create(ctx context.Context, e *entity.User) (*entity.User,
 	return user, nil
 }
 
-//Get a user
+// Get a user
 func (r *userRepoEnt) Get(ctx context.Context, id *entity.ID) (*entity.User, error) {
 	u, err := r.client.User.
 		Query().
@@ -54,7 +54,7 @@ func (r *userRepoEnt) Get(ctx context.Context, id *entity.ID) (*entity.User, err
 	return &entity.User{*u}, nil
 }
 
-//Get a user by email
+// Get a user by email
 func (r *userRepoEnt) GetByEmail(ctx context.Context, email string) (*entity.User, error) {
 	u, err := r.client.User.
 		Query().
@@ -67,7 +67,7 @@ func (r *userRepoEnt) GetByEmail(ctx context.Context, email string) (*entity.Use
 	return &entity.User{*u}, nil
 }
 
-//Update a user
+// Update a user
 func (r *userRepoEnt) Update(ctx context.Context, e *entity.User) (*entity.User, error) {
 
 	// Prepare the update query
@@ -91,7 +91,7 @@ func (r *userRepoEnt) Update(ctx context.Context, e *entity.User) (*entity.User,
 	return &entity.User{*u}, nil
 }
 
-//Delete a user
+// Delete a user
 func (r *userRepoEnt) Delete(ctx context.Context, id *entity.ID) error {
 	err := r.client.User.
 		DeleteOneID(*id).
@@ -103,7 +103,7 @@ func (r *userRepoEnt) Delete(ctx context.Context, id *entity.ID) error {
 	return nil
 }
 
-//List users
+// List users
 func (r *userRepoEnt) List(ctx context.Context) ([]*entity.User, error) {
 	entUsers, err := r.client.User.
 		Query().
@@ -121,7 +121,7 @@ func (r *userRepoEnt) List(ctx context.Context) ([]*entity.User, error) {
 	return users, nil
 }
 
-//Search users
+// Search users
 func (r *userRepoEnt) Search(ctx context.Context, query string) ([]*entity.User, error) {
 	entUsers, err := r.client.User.
 		Query().

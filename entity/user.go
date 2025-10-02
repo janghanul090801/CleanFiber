@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/chkilel/fiberent/ent"
+	"fiberent/ent"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -40,7 +40,7 @@ func ValidatePassword(u *User, p string) error {
 	return nil
 }
 
-// generatePassword generate password
+// GeneratePassword generate password
 func (u *User) GeneratePassword(raw string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(raw), 10)
 	if err != nil {

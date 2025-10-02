@@ -1,8 +1,8 @@
 package presenter
 
-import "github.com/chkilel/fiberent/entity"
+import "fiberent/entity"
 
-//User data
+// User data
 type User struct {
 	ID        entity.ID `json:"id,omitempty"`
 	Email     string    `json:"email"`

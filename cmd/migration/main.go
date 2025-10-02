@@ -5,10 +5,10 @@ import (
 
 	"log"
 
-	"github.com/chkilel/fiberent/ent"
-	"github.com/chkilel/fiberent/ent/migrate"
-	"github.com/chkilel/fiberent/infrastructure/ent/datastore"
-	"github.com/chkilel/fiberent/pkg/config"
+	"fiberent/ent"
+	"fiberent/ent/migrate"
+	"fiberent/infrastructure/ent/datastore"
+	"fiberent/pkg/config"
 )
 
 func main() {

@@ -3,25 +3,25 @@ package repository
 import (
 	"context"
 
-	"github.com/chkilel/fiberent/ent"
-	"github.com/chkilel/fiberent/ent/pet"
-	"github.com/chkilel/fiberent/entity"
-	usecase "github.com/chkilel/fiberent/usecase/pet"
+	"fiberent/ent"
+	"fiberent/ent/pet"
+	"fiberent/entity"
+	usecase "fiberent/usecase/pet"
 )
 
-//petRepoEnt Ent repo
+// petRepoEnt Ent repo
 type petRepoEnt struct {
 	client *ent.Client
 }
 
-// NewPetRepoEnt is specific implementation of the interface
+// NewPetRepoEnt is a specific implementation of the interface
 func NewPetRepoEnt(client *ent.Client) usecase.Repository {
 	return &petRepoEnt{
 		client: client,
 	}
 }
 
-//Create a pet
+// Create a pet
 func (r *petRepoEnt) Create(ctx context.Context, p *entity.Pet) (*entity.Pet, error) {
 	EntPet, err := r.client.Pet.Create().
 		SetName(p.Name).
@@ -37,7 +37,7 @@ func (r *petRepoEnt) Create(ctx context.Context, p *entity.Pet) (*entity.Pet, er
 	return pet, nil
 }
 
-//Get a pet
+// Get a pet
 func (r *petRepoEnt) Get(ctx context.Context, id *entity.ID) (*entity.Pet, error) {
 	entPet, err := r.client.Pet.
 		Query().
@@ -50,7 +50,7 @@ func (r *petRepoEnt) Get(ctx context.Context, id *entity.ID) (*entity.Pet, error
 	return &entity.Pet{*entPet}, nil
 }
 
-//Update a pet
+// Update a pet
 func (r *petRepoEnt) Update(ctx context.Context, p *entity.Pet) (*entity.Pet, error) {
 
 	// Prepare the update query
@@ -66,7 +66,7 @@ func (r *petRepoEnt) Update(ctx context.Context, p *entity.Pet) (*entity.Pet, er
 	return &entity.Pet{*entPet}, nil
 }
 
-//Delete a pet
+// Delete a pet
 func (r *petRepoEnt) Delete(ctx context.Context, id *entity.ID) error {
 	err := r.client.Pet.
 		DeleteOneID(*id).
@@ -78,7 +78,7 @@ func (r *petRepoEnt) Delete(ctx context.Context, id *entity.ID) error {
 	return nil
 }
 
-//List pets
+// List pets
 func (r *petRepoEnt) List(ctx context.Context) ([]*entity.Pet, error) {
 	entPets, err := r.client.Pet.
 		Query().
@@ -96,7 +96,7 @@ func (r *petRepoEnt) List(ctx context.Context) ([]*entity.Pet, error) {
 	return pets, nil
 }
 
-//Search pets
+// Search pets
 func (r *petRepoEnt) Search(ctx context.Context, name string) ([]*entity.Pet, error) {
 	entPets, err := r.client.Pet.
 		Query().

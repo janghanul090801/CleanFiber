@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/chkilel/fiberent/ent"
+	"fiberent/ent"
 )
 
 type Pet struct {

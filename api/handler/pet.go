@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 
-	"github.com/chkilel/fiberent/api/presenter"
-	"github.com/chkilel/fiberent/entity"
-	"github.com/chkilel/fiberent/usecase/pet"
+	"fiberent/api/presenter"
+	"fiberent/entity"
+	"fiberent/usecase/pet"
 	"github.com/gofiber/fiber/v2"
 )
 

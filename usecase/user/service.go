@@ -5,37 +5,37 @@ import (
 	"strings"
 	"time"
 
-	"github.com/chkilel/fiberent/entity"
+	"fiberent/entity"
 )
 
-//Service interface
+// Service interface
 type Service struct {
 	repo Repository
 }
 
-//NewService create new use case
+// NewService create a new use case
 func NewService(r Repository) *Service {
 	return &Service{
 		repo: r,
 	}
 }
 
-//GetUser Get a user by ID
+// GetUser Get a user by ID
 func (s *Service) GetUser(ctx context.Context, id *entity.ID) (*entity.User, error) {
 	return s.repo.Get(ctx, id)
 }
 
-//SearchUsers Search users
+// SearchUsers Search users
 func (s *Service) SearchUsers(ctx context.Context, query string) ([]*entity.User, error) {
 	return s.repo.Search(ctx, strings.ToLower(query))
 }
 
-//ListUsers List users
+// ListUsers List users
 func (s *Service) ListUsers(ctx context.Context) ([]*entity.User, error) {
 	return s.repo.List(ctx)
 }
 
-//CreateUser Create a user
+// CreateUser Create a user
 func (s *Service) CreateUser(ctx context.Context, email, password, firstName, lastName string) (*entity.User, error) {
 
 	_, err := s.repo.GetByEmail(ctx, email)
@@ -43,7 +43,7 @@ func (s *Service) CreateUser(ctx context.Context, email, password, firstName, la
 		return nil, entity.ErrEmailAlreadyRegistred
 	}
 
-	// Create a new user and generate encripted password
+	// Create a new user and generate encrypted password
 	e, err := entity.NewUser(email, password, firstName, lastName)
 	if err != nil {
 		return e, err
@@ -51,14 +51,14 @@ func (s *Service) CreateUser(ctx context.Context, email, password, firstName, la
 	return s.repo.Create(ctx, e)
 }
 
-//UpdateUser Update a user
+// UpdateUser Update a user
 func (s *Service) UpdateUser(ctx context.Context, e *entity.User) (*entity.User, error) {
 
 	password := strings.TrimSpace(e.Password)
 	email := strings.TrimSpace(e.Email)
 	var err error
 
-	// User want to change password
+	// User wants to change password
 	if password != "" {
 		e.Password, err = e.GeneratePassword(password)
 		if err != nil {
@@ -71,7 +71,7 @@ func (s *Service) UpdateUser(ctx context.Context, e *entity.User) (*entity.User,
 		return nil, err
 	}
 
-	// User want to change email
+	// User wants to change email
 	if email != "" && email != savedUser.Email {
 
 		// GetByEmail fails if no user found, or more than 1 user returned.
@@ -87,7 +87,7 @@ func (s *Service) UpdateUser(ctx context.Context, e *entity.User) (*entity.User,
 	return s.repo.Update(ctx, e)
 }
 
-//DeleteUser Delete a user
+// DeleteUser Delete a user
 func (s *Service) DeleteUser(ctx context.Context, id *entity.ID) error {
 	u, err := s.GetUser(ctx, id)
 	if u == nil {

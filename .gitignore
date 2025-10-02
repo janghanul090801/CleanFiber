@@ -8,9 +8,6 @@
 build/
 tmp/
 
-# Test
-*.out
-
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -41,3 +38,5 @@ tmp/
 vendor/
 vendor
 /Godeps/
+
+.env
