@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"context"
-
 	"fiberent/api/presenter"
 	"fiberent/entity"
 	"fiberent/usecase/user"
@@ -10,18 +8,18 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func NewUserHandler(app fiber.Router, ctx context.Context, service user.UseCase) {
-	app.Post("/", createUser(ctx, service))
-	app.Get("/", listUsers(ctx, service))
-	app.Get("/:userId", getUser(ctx, service))
-	app.Post("/:userId", updateUser(ctx, service))
-	app.Delete("/:userId", deleteUser(ctx, service))
-	app.Post("/:userId/pets", ownPets(ctx, service))
+func NewUserHandler(app fiber.Router, service user.UseCase) {
+	app.Post("/", createUser(service))
+	app.Get("/", listUsers(service))
+	app.Get("/:userId", getUser(service))
+	app.Post("/:userId", updateUser(service))
+	app.Delete("/:userId", deleteUser(service))
+	app.Post("/:userId/pets", ownPets(service))
 }
 
-func createUser(ctx context.Context, service user.UseCase) fiber.Handler {
+func createUser(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-
+		ctx := c.Context()
 		var user *entity.User
 		err := c.BodyParser(&user)
 
@@ -56,8 +54,9 @@ func createUser(ctx context.Context, service user.UseCase) fiber.Handler {
 	}
 }
 
-func getUser(ctx context.Context, service user.UseCase) fiber.Handler {
+func getUser(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 		id, err := entity.StringToID(c.Params("userId"))
 
 		if err != nil {
@@ -89,8 +88,9 @@ func getUser(ctx context.Context, service user.UseCase) fiber.Handler {
 	}
 }
 
-func updateUser(ctx context.Context, service user.UseCase) fiber.Handler {
+func updateUser(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		id, err := entity.StringToID(c.Params("userId"))
 
@@ -136,8 +136,9 @@ func updateUser(ctx context.Context, service user.UseCase) fiber.Handler {
 	}
 }
 
-func deleteUser(ctx context.Context, service user.UseCase) fiber.Handler {
+func deleteUser(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		id, err := entity.StringToID(c.Params("userId"))
 		if err != nil {
@@ -164,8 +165,10 @@ func deleteUser(ctx context.Context, service user.UseCase) fiber.Handler {
 	}
 }
 
-func listUsers(ctx context.Context, service user.UseCase) fiber.Handler {
+func listUsers(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
+
 		users, err := service.ListUsers(ctx)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
@@ -194,8 +197,9 @@ func listUsers(ctx context.Context, service user.UseCase) fiber.Handler {
 	}
 }
 
-func ownPets(ctx context.Context, service user.UseCase) fiber.Handler {
+func ownPets(service user.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		id, err := entity.StringToID(c.Params("userId"))
 

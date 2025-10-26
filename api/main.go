@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	_ "fiberent/api/docs"
 	"fmt"
 	"log"
@@ -76,8 +75,8 @@ func main() {
 	api := app.Group("/api")
 
 	// Prepare our endpoints for the API.
-	handler.NewUserHandler(api.Group("/v1/users"), context.Background(), userService)
-	handler.NewPetHandler(api.Group("/v1/pets"), context.Background(), petService)
+	handler.NewUserHandler(api.Group("/v1/users"), userService)
+	handler.NewPetHandler(api.Group("/v1/pets"), petService)
 
 	// Prepare an endpoint for 'Not Found'.
 	app.All("*", func(c *fiber.Ctx) error {

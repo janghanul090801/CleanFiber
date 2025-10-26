@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"context"
-
 	"fiberent/api/presenter"
 	"fiberent/entity"
 	"fiberent/usecase/pet"
@@ -10,16 +8,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func NewPetHandler(app fiber.Router, ctx context.Context, service pet.UseCase) {
-	app.Post("/", createPet(ctx, service))
-	app.Get("/", listPets(ctx, service))
-	app.Get("/:petId", getPet(ctx, service))
-	app.Post("/:petId", updatePet(ctx, service))
-	app.Delete("/:petId", deletePet(ctx, service))
+func NewPetHandler(app fiber.Router, service pet.UseCase) {
+	app.Post("/", createPet(service))
+	app.Get("/", listPets(service))
+	app.Get("/:petId", getPet(service))
+	app.Post("/:petId", updatePet(service))
+	app.Delete("/:petId", deletePet(service))
 }
 
-func createPet(ctx context.Context, service pet.UseCase) fiber.Handler {
+func createPet(service pet.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		var pet *entity.Pet
 		err := c.BodyParser(&pet)
@@ -54,8 +53,10 @@ func createPet(ctx context.Context, service pet.UseCase) fiber.Handler {
 	}
 }
 
-func getPet(ctx context.Context, service pet.UseCase) fiber.Handler {
+func getPet(service pet.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
+
 		id, err := entity.StringToID(c.Params("petId"))
 
 		if err != nil {
@@ -86,8 +87,9 @@ func getPet(ctx context.Context, service pet.UseCase) fiber.Handler {
 	}
 }
 
-func updatePet(ctx context.Context, service pet.UseCase) fiber.Handler {
+func updatePet(service pet.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		id, err := entity.StringToID(c.Params("petId"))
 
@@ -132,8 +134,9 @@ func updatePet(ctx context.Context, service pet.UseCase) fiber.Handler {
 	}
 }
 
-func deletePet(ctx context.Context, service pet.UseCase) fiber.Handler {
+func deletePet(service pet.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
 
 		id, err := entity.StringToID(c.Params("petId"))
 		if err != nil {
@@ -160,8 +163,10 @@ func deletePet(ctx context.Context, service pet.UseCase) fiber.Handler {
 	}
 }
 
-func listPets(ctx context.Context, service pet.UseCase) fiber.Handler {
+func listPets(service pet.UseCase) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		ctx := c.Context()
+
 		users, err := service.ListPets(ctx)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
